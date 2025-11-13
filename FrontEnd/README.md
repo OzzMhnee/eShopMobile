@@ -9,7 +9,7 @@ Documentations
 
 - [react native](https://reactnative.dev/docs/environment-setup)
 - [expo](https://docs.expo.dev/get-started/introduction/)
-
+- [FakeStoreApi](https://fakestoreapi.com/products/)
 
 Termes :
 

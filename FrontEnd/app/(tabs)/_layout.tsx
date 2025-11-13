@@ -40,6 +40,9 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <Feather size={28} name="user" color={color} />,
         }}
       />
+      <Tabs.Screen name="search" options={{ href: null }} />
+      <Tabs.Screen name="favorite" options={{ href: null }} />
+      <Tabs.Screen name="cart" options={{ href: null }} />
     </Tabs>
   );
 }
