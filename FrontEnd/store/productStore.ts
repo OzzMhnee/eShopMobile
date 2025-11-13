@@ -11,21 +11,21 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 //Définition de l'interface pour le state du store
 interface ProductsState {
-    products: Product[];                            //Liste complète des produits
-    filteredProducts: Product[];                    //Liste des produits filtrés   
-    categories: string[];                           //Liste des catégories de produits disponibles
-    loading: boolean;                               //Indicateur de chargement
-    error: string | null;   
-    selectedCategory: string | null;                        //Message d'erreur, s'il y en a
-//Action to fetch products
-    //Méthode pour récupérer les produoits depuis l'API
-    fetchProducts: () => Promise<void>;
-    //Méthode pour récupérer les catégories depuis l'API
-    fetchCategories: () => Promise<void>;
-    setCategory: (category: string | null) => Promise<void>;
-    searchProducts: (query: string) => void;
-    sortProducts: (sortBy: "price-asc" | "price-desc" | "rating") => void;
-    searchProductsRealTime: (query: string) => Promise<void>;
+  products: Product[];                            //Liste complète des produits
+  filteredProducts: Product[];                    //Liste des produits filtrés   
+  categories: string[];                           //Liste des catégories de produits disponibles
+  loading: boolean;                               //Indicateur de chargement
+  error: string | null;                           //Message d'erreur, s'il y en a
+  selectedCategory: string | null;                
+  //Action to fetch products
+  //Méthode pour récupérer les produits depuis l'API
+  fetchProducts: () => Promise<void>;
+  //Méthode pour récupérer les catégories depuis l'API
+  fetchCategories: () => Promise<void>;
+  setCategory: (category: string | null) => Promise<void>;
+  searchProducts: (query: string) => void;
+  sortProducts: (sortBy: "price-asc" | "price-desc" | "rating") => void;
+  searchProductsRealTime: (query: string) => Promise<void>;
 }
 //Création du store avec Zustand et persistance avec AsyncStorage
 export const useProductStore = create<ProductsState>((set, get) =>
