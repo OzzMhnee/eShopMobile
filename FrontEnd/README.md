@@ -25,3 +25,10 @@ Libraries
 
 déplacer le git ignore de frontend a la racine
 supprimer le dossier git caché de frontend
+
+
+GRU interface + SingleTone
+
+
+
+npm i zustand
