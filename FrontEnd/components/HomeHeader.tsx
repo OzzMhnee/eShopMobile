@@ -40,7 +40,7 @@ const HomeHeader = () => {
               <Text
               style={styles.itemsText}>
                 {0}
-                {/* {favoriteItems?.length ? favoriteItems?.length : 0} */}
+                {/* {favoriteItems?.length ?? 0} */}
               </Text>
             </View>
           </TouchableOpacity>
@@ -56,7 +56,7 @@ const HomeHeader = () => {
             style={styles.itemsView}>
               <Text
               style={styles.itemsText}>
-                {/* {items?.length ? items?.length : 0} */}
+                {/* {items?.length ?? 0} */}
                 {0}
               </Text>
             </View>
