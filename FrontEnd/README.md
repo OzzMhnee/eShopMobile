@@ -31,4 +31,4 @@ GRU interface + SingleTone
 
 
 
-npm i zustand
+npm i zustand, toast

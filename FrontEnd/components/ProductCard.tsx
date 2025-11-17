@@ -13,7 +13,7 @@ import { Product } from '@/type';
 import Button from './Button';
 import Toast from 'react-native-toast-message';
 import { useRouter } from 'expo-router';
-import Rating from './Rating';
+// import Rating from './Rating';
 import { useCartStore } from '@/store/cartStore';
 import { useFavoritesStore } from '@/store/favoriteStore';
 import { AntDesign } from '@expo/vector-icons';
@@ -39,7 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     customStyle
 }) => {
     // Déstructuration des propriétés du produit
-    const { id, title, price, category, image, rating } = product;
+    const { id, title, price, category, image } = product;
 
     // Hook de navigation pour accéder à la page détail du produit
     const router = useRouter();
@@ -129,20 +129,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
                         €{price.toFixed(2)}
                     </Text>
                     {/* Note du produit */}
-                    <View style={!compact && { marginBottom: 7 }}>
+                    {/* <View style={!compact && { marginBottom: 7 }}>
                         <Rating 
                             rating={rating?.rate} 
                             count={rating?.count}
                             size={12}
                         />
-                    </View>
+                    </View> */}
                     {/* Bouton "Ajouter au panier" affiché seulement en mode détaillé */}
                     {!compact && (
                         <Button 
-                            onPress = {event => {
-                                event.stopPropagation?.();
-                                handleAddToCart();
-                            }}
+                            onPress = {handleAddToCart}
                             title='Ajouter au panier' 
                             size='small' 
                             variant='outline'
@@ -245,7 +242,7 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         elevation: 2,
         width: '48%',
-        minWidth: 150,
+        // minWidth: 150,
         marginBottom: 16,
         borderWidth: 1,
         borderColor: AppColors.gray[200],
