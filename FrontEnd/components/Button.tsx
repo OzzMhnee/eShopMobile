@@ -1,5 +1,5 @@
 import { ActivityIndicator, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native'
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { AppColors } from '@/constants/theme'
 
 interface ButtonProps {
@@ -13,10 +13,21 @@ interface ButtonProps {
     style?: StyleProp<ViewStyle>;
     textStyle?: StyleProp<TextStyle>;
     accessibilityLabel?: string;
+    accessibilityRole?: 'button' | 'link' | 'header' | 'image' | 'text' | 'none' | undefined;
+    leftIcon?: React.ReactNode;
+    rightIcon?: React.ReactNode;
+    testID?: string;
 }
 
+/**
+ * Composant Button réutilisable, optimisé pour la performance et l'accessibilité.
+ * - Utilise useMemo pour les styles.
+ * - Utilise useCallback pour l'action onPress.
+ * - Supporte les icônes à gauche/droite, le loading, le testID pour les tests.
+ * - Désactive le bouton si loading ou disabled.
+ */
 const Button:React.FC<ButtonProps> = ({
-    title, onPress, accessibilityLabel,
+    title, onPress, accessibilityLabel, accessibilityRole = 'button',
     size='medium',
     variant="primary",
     fullWidth=false,
@@ -24,46 +35,64 @@ const Button:React.FC<ButtonProps> = ({
     loading=false,
     style,
     textStyle,
+    leftIcon,
+    rightIcon,
+    testID,
 }) => {
-    const buttonStyle=[
+    // Optimiser la génération des styles avec useMemo
+    const buttonStyle = useMemo(() => [
         styles.button,
         styles[size],
         styles[variant],
         fullWidth && styles.fullWidth,
         disabled && styles.disabled,
         style,
-    ];
+    ], [size, variant, fullWidth, disabled, style]);
 
-    const textStyles=[
+    const textStyles = useMemo(() => [
         styles.text,
         styles[`${variant}Text`],
         textStyle,
-    ];
+    ], [variant, textStyle]);
 
-  return (
-    <TouchableOpacity
-        style={buttonStyle}
-        onPress={onPress}
-        disabled={disabled || loading}
-        activeOpacity={0.8}
-        accessibilityLabel={accessibilityLabel}
-    >
-        {loading ? (
-            <ActivityIndicator
-                color={
-                    variant === 'primary'
-                    ? AppColors.background.primary
-                    : AppColors.primary[500]
-                }
-            />
-        ) : (
-            <Text style={textStyles}>{title}</Text>
-        )}
-    </TouchableOpacity>
-  )
+    // Empêcher l'action si loading ou disabled
+    const handlePress = useCallback(() => {
+        if (!disabled && !loading) {
+            onPress();
+        }
+    }, [onPress, disabled, loading]);
+
+    return (
+        <TouchableOpacity
+            style={buttonStyle}
+            onPress={handlePress}
+            disabled={disabled || loading}
+            activeOpacity={0.8}
+            accessibilityLabel={accessibilityLabel}
+            accessibilityRole={accessibilityRole}
+            testID={testID}
+        >
+            {/* Afficher l'icône à gauche si fournie */}   
+            {leftIcon && <>{leftIcon}</>}
+            {loading ? (
+                <ActivityIndicator
+                    color={
+                        variant === 'primary'
+                        ? AppColors.background.primary
+                        : AppColors.primary[500]
+                    }
+                    style={{ marginHorizontal: 4 }}
+                />
+            ) : (
+                <Text style={textStyles}>{title}</Text>
+            )}
+            {/* Afficher l'icône à droite si fournie */}
+            {rightIcon && <>{rightIcon}</>}
+        </TouchableOpacity>
+    )
 }
 
-export default Button
+export default React.memo(Button);
 
 const styles = StyleSheet.create({
     button : {
@@ -71,9 +100,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
+        minHeight: 40,
     },
     text : {
         fontWeight: '600',
+        fontSize: 16,
     },
     fullWidth : {
         width: '100%',
@@ -122,4 +153,4 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
         paddingHorizontal: 32,
     },
-})
+})                                                                                                                                                                                                                  

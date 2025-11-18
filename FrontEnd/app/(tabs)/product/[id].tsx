@@ -1,5 +1,5 @@
 import { Product } from '@/type';
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Dimensions  } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams } from 'expo-router'
 import CommonHeader from '@/components/CommonHeader';
